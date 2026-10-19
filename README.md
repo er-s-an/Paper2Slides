@@ -184,6 +184,8 @@ Paper2Slides intelligently saves your progress at every key stage, allowing you 
 > [!TIP]
 > Checkpoints are auto-saved. Just run the same command to resume. Use `--from-stage` only to **force** restart from a specific stage.
 
+Custom-style plan directories use a hash of the complete style description, so changing a description creates a separate plan. Custom-style checkpoints saved under the older text-prefix directory names are left intact but are not automatically reused; the next run rebuilds the plan while retaining shared RAG and summary checkpoints.
+
 ### 3. Web Interface
 
 Launch both backend and frontend services:

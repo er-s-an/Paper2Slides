@@ -1,6 +1,7 @@
 """
 Path generation functions for checkpoints and outputs
 """
+import hashlib
 from pathlib import Path
 from datetime import datetime
 from typing import Dict
@@ -28,11 +29,10 @@ def get_config_name(config: Dict) -> str:
     else:
         param = config.get("slides_length", "medium")
     
-    # Handle custom style. Use hash suffix
+    # Key checkpoints by the entire description, not a shared text prefix.
     if style == "custom":
         custom = config.get("custom_style", "")
-        # Use first 16 chars of custom style
-        suffix = custom[:16].replace(" ", "_").replace("/", "_") if custom else "custom"
+        suffix = hashlib.sha256(custom.encode("utf-8")).hexdigest()[:16] if custom else "custom"
         style = f"custom_{suffix}"
     
     return f"{output_type}_{style}_{param}"
